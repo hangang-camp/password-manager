@@ -5,32 +5,32 @@ from django.contrib.auth.models import User
 
 
 class User(models.Model):
-    username = models.TextField()
-    password = models.TextField()
+    username = models.CharField(max_length=255)
+    password = models.CharField(max_length=255)
 
     def __str__(self):
         return self.username
 
 
 class UserOwnAccount(models.Model):
-    alias = models.TextField()
-    username = models.TextField()
-    password = models.TextField()
-    category = models.TextField()
-    sitename = models.TextField()
-    siteurl = models.TextField()
+    alias = models.CharField(max_length=255)
+    username = models.CharField(max_length=255)
+    password = models.CharField(max_length=255)
+    category = models.CharField(max_length=255)
+    sitename = models.CharField(max_length=255)
+    siteurl = models.CharField(max_length=255)
     user_id = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='user_id_UserOwnAccount')
+        User, on_delete=models.CASCADE, related_name='own_account')
 
 
 class AccountTagMap(models.Model):
     tag_id = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='tag_id_AccountTagMap')
+        "Tag", on_delete=models.CASCADE, related_name='account_map')
     account_id = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='account_id_AccountTagMap')
+        "UserOwnAccount", on_delete=models.CASCADE, related_name='tag_map_account')
     user_id = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='user_id_AccountTagMap')
+        User, on_delete=models.CASCADE, related_name='tag_map_user')
 
 
 class Tag(models.Model):
-    name = models.TextField()
+    name = models.CharField(max_length=255)
