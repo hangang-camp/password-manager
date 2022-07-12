@@ -23,14 +23,14 @@ class UserOwnAccount(models.Model):
         User, on_delete=models.CASCADE, related_name='own_account')
 
 
-class AccountTagMap(models.Model):
-    tag_id = models.ForeignKey(
-        "Tag", on_delete=models.CASCADE, related_name='account_map')
-    account_id = models.ForeignKey(
-        "UserOwnAccount", on_delete=models.CASCADE, related_name='tag_map_account')
-    user_id = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='tag_map_user')
-
-
 class Tag(models.Model):
     name = models.CharField(max_length=255)
+
+
+class AccountTagMap(models.Model):
+    tag_id = models.ForeignKey(
+        Tag, on_delete=models.CASCADE, related_name='account_map')
+    account_id = models.ForeignKey(
+        UserOwnAccount, on_delete=models.CASCADE, related_name='tag_map_account')
+    user_id = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='tag_map_user')
